@@ -128,9 +128,9 @@ O público-alvo inclui:
 | Fase | Período | Objetivos | Entregáveis | Responsáveis |
 |------|----------|------------|--------------|---------------|
 | **1. Ideação e Planeamento (M1)** | até 11 nov | Conceito, arquitetura e plano | Relatório SD + README + slides | Bernardo & Tiago |
-| **2. Desenvolvimento Base (M2)** | nov–dez | API + BD + Firmware ESP32 | Protótipo funcional | Ambos |
-| **3. IA e Dashboard (M3)** | jan–fev | Integração IA + visualização | Relatório final + vídeo | Ambos |
-| **4. Testes e Apresentação** | fev | Validação e entrega final | Poster + apresentação | Ambos |
+| **2. Desenvolvimento Base (M2)** | nov–dez | API + BD + Firmware ESP32 | Protótipo funcional | Bernardo & Tiago |
+| **3. IA e Dashboard (M3)** | jan–fev | Integração IA + visualização | Relatório final + vídeo | Bernardo & Tiago |
+| **4. Testes e Apresentação** | fev | Validação e entrega final | Poster + apresentação | Bernardo & Tiago |
 
 ---
 
