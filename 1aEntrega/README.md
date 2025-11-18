@@ -1,4 +1,4 @@
-# 🌱 SmartGreenhouse – Estufa Inteligente com IoT e IA  
+# 🌱 GrowLab – Estufa Inteligente com IoT e IA  
 ## 📘 Milestone 1 – Investigação e Ideação  
 📅 **Data de entrega:** 11 de novembro de 2025  
 
