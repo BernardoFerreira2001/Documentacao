@@ -13,8 +13,8 @@
 
 **Universidade:** IADE – Universidade Europeia  
 **Faculdade:** Faculdade de Design, Tecnologia e Comunicação  
-**Projeto:** *SmartGreenhouse – Estufa Inteligente com IoT e IA*  
-**Repositório GitHub:** ([https://github.com/teu-utilizador/SmartGreenhouse](https://github.com/BernardoFerreira2001/Documentacao))
+**Projeto:** *GrowLab – Estufa Inteligente com IoT e IA*  
+**Repositório GitHub:** ([https://github.com/teu-utilizador/GrowLab](https://github.com/BernardoFerreira2001/Documentacao))
 
 **Palavras-chave:** IoT, Sistemas Distribuídos, Inteligência Artificial, Estufa, Automação, FastAPI, ESP32
 
@@ -22,7 +22,7 @@
 
 ## Descrição e Motivação do Projeto
 
-O projeto **SmartGreenhouse** tem como objetivo desenvolver uma **estufa inteligente** capaz de **monitorizar e ajustar automaticamente** as condições internas — **temperatura e humidade** — de forma a otimizar o crescimento de plantas.
+O projeto **GrowLab** tem como objetivo desenvolver uma **estufa inteligente** capaz de **monitorizar e ajustar automaticamente** as condições internas — **temperatura e humidade** — de forma a otimizar o crescimento de plantas.
 
 Com o uso de sensores e atuadores controlados por um **ESP32**, o sistema reage a alterações do ambiente:
 - Ativa uma **ventoinha** quando a temperatura está elevada;
@@ -145,7 +145,7 @@ Fev |Testes e Apresentação Final
 
 ## Conclusão
 
-O **SmartGreenhouse** é um projeto que combina **IoT, Sistemas Distribuídos e Inteligência Artificial** para criar uma estufa autónoma e eficiente.  
+O **GrowLab** é um projeto que combina **IoT, Sistemas Distribuídos e Inteligência Artificial** para criar uma estufa autónoma e eficiente.  
 Através do controlo automático de temperatura, humidade e luz, demonstra a aplicação prática dos conceitos estudados nas diversas Unidades Curriculares.  
 
 Esta **primeira milestone** define a base técnica e conceptual do sistema, garantindo um planeamento sólido e uma arquitetura distribuída pronta para implementação nas próximas fases.
@@ -154,7 +154,7 @@ Esta **primeira milestone** define a base técnica e conceptual do sistema, gara
 
 ## Estrutura de Repositório (parcial)
 
-SmartGreenhouse/
+GrowLab/
 ├─ Documentacao/
 │ ├─ 1aEntrega/
 │ │ ├─ README.md ← (este ficheiro)
