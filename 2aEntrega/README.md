@@ -264,7 +264,7 @@ A estrutura da base de dados encontra-se alinhada com a arquitetura definida na 
 * Ventoinha 5V
 * LED
 * Fonte de alimentação MB102
-* Protoboard e cabos jumper
+* Breadboard e cabos jumper
 
 ### Ligações Principais
 
