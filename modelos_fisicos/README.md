@@ -12,7 +12,7 @@ Esta pasta contém toda a documentação relacionada com a **montagem física do
 - Ventoinha 5V  
 - LED  
 - Fonte de alimentação MB102  
-- Protoboard  
+- breadboard  
 - Cabos jumper (macho-macho e macho-fêmea)
 
 ---
@@ -53,8 +53,7 @@ blob:https://web.whatsapp.com/356e20d4-99eb-421d-868d-49361eb0b0fb
 ---
 
 ## 🛠️ Descrição da Montagem
-
-O protótipo foi montado numa protoboard para facilitar testes e alterações.  
+  
 O ESP32 atua como controlador central, recolhendo dados do sensor DHT22 e acionando os atuadores através do módulo de relés.
 
 Esta abordagem permite:
