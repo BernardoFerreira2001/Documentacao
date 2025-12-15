@@ -1,0 +1,83 @@
+CREATE DATABASE IF NOT EXISTS growlab;
+USE growlab;
+
+-- -----------------------------------------------------
+-- 1) Dispositivos (ex: GrowLab #1)
+-- -----------------------------------------------------
+CREATE TABLE devices (
+  device_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  location VARCHAR(100),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO devices (name, location) VALUES ("GrowLab #1", "Lab IADE");
+
+
+-- -----------------------------------------------------
+-- 2) Leitura dos sensores (DHT22)
+-- -----------------------------------------------------
+CREATE TABLE sensor_readings (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  device_id INT NOT NULL,
+  temperature FLOAT NOT NULL,
+  humidity FLOAT NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (device_id) REFERENCES devices(device_id)
+);
+
+
+-- -----------------------------------------------------
+-- 3) Estados dos atuadores (fan, mist, led)
+-- -----------------------------------------------------
+CREATE TABLE actuator_states (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  device_id INT NOT NULL,
+
+  fan_state BOOLEAN NOT NULL,    -- 0 = OFF, 1 = ON
+  mist_state BOOLEAN NOT NULL,
+  led_state BOOLEAN NOT NULL,
+
+  mode VARCHAR(10) NOT NULL,     -- 'auto' ou 'manual'
+  source VARCHAR(20),            -- 'esp32', 'blynk', 'api', etc.
+
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (device_id) REFERENCES devices(device_id)
+);
+
+
+-- -----------------------------------------------------
+-- 4) Configurações da estufa
+-- -----------------------------------------------------
+CREATE TABLE settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  device_id INT NOT NULL,
+
+  min_temp FLOAT DEFAULT 20.0,
+  max_temp FLOAT DEFAULT 28.0,
+
+  min_humidity FLOAT DEFAULT 40.0,
+  max_humidity FLOAT DEFAULT 75.0,
+
+  light_on_time TIME DEFAULT '08:00:00',
+  light_off_time TIME DEFAULT '20:00:00',
+
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (device_id) REFERENCES devices(device_id)
+);
+
+INSERT INTO settings (device_id) VALUES (1);
+
+
+-- -----------------------------------------------------
+-- 5) Logs do sistema / API
+-- -----------------------------------------------------
+CREATE TABLE error_logs (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  level ENUM('INFO','WARN','ERROR') NOT NULL DEFAULT 'INFO',
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
