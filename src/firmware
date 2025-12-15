@@ -1,1 +1,215 @@
-ARDUINO
+/********************  BLYNK CONFIG  ********************/
+#define BLYNK_TEMPLATE_ID "TMPL5u-RkcADe"
+#define BLYNK_TEMPLATE_NAME "GrowLb"
+#define BLYNK_AUTH_TOKEN "QVjZo0V_oGcaHCQv21qOk4PAcCYK5DM7"
+
+#define BLYNK_PRINT Serial
+
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <HTTPClient.h>
+#include <BlynkSimpleEsp32.h>
+#include "DHT.h"
+
+/********************  API CONFIG  ********************/
+String apiUrl = "http://192.168.1.116:8000"; 
+int deviceId = 1;
+
+/********************  DHT22  ********************/
+#define DHTPIN 4
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+
+/********************  PINOS  ********************/
+#define LED_PIN 21
+#define RELAY_FAN_PIN 5
+#define RELAY_MIST_PIN 23
+
+#define RELAY_ON  LOW
+#define RELAY_OFF HIGH
+
+/********************  ESTADOS  ********************/
+bool ledManualMode  = false;
+bool fanManualMode  = false;
+bool mistManualMode = false;
+
+bool ledState  = false;
+bool fanState  = false;
+bool mistState = false;
+
+/********************  TIMERS  ********************/
+unsigned long lastSensorSend = 0;
+unsigned long lastPrint = 0;
+unsigned long lastLedToggle = 0;   // <-- NOVO (temporizador do LED)
+
+float lastTemp = -100;
+float lastHum  = -100;
+
+/********************  WIFI  ********************/
+char ssid[] = "Vodafone-17CAAF";
+char pass[] = "CyufGW6mzK";
+
+/******************** API – SENSOR ********************/
+void enviarSensorParaAPI(float temp, float hum) {
+  HTTPClient http;
+  String endpoint = apiUrl + "/devices/" + String(deviceId) + "/sensor";
+
+  http.begin(endpoint);
+  http.addHeader("Content-Type", "application/json");
+
+  String payload = "{\"temperature\":" + String(temp) +
+                   ",\"humidity\":" + String(hum) + "}";
+
+  int httpCode = http.POST(payload);
+  Serial.printf("API SENSOR → %d\n", httpCode);
+
+  http.end();
+}
+
+/******************** API – ACTUATORS ********************/
+void enviarAtuadoresParaAPI() {
+  HTTPClient http;
+  String endpoint = apiUrl + "/devices/" + String(deviceId) + "/actuators";
+
+  http.begin(endpoint);
+  http.addHeader("Content-Type", "application/json");
+
+  String payload = "{";
+  payload += "\"fan_state\":" + String(fanState ? 1 : 0) + ",";
+  payload += "\"mist_state\":" + String(mistState ? 1 : 0) + ",";
+  payload += "\"led_state\":" + String(ledState ? 1 : 0) + ",";
+  payload += "\"mode\":\"auto\",";
+  payload += "\"source\":\"esp32\"}";
+  
+  int httpCode = http.POST(payload);
+  Serial.printf("API ACTUATORS → %d\n", httpCode);
+
+  http.end();
+}
+
+/********************  ENVIO PARA BLYNK  ********************/
+void enviarSensorParaBlynk(float temp, float hum) {
+  Blynk.virtualWrite(V0, temp);
+  Blynk.virtualWrite(V1, hum);
+}
+
+/********************  BLYNK CALLBACKS  ********************/
+BLYNK_WRITE(V2) {  // LED
+  int v = param.asInt();
+  ledManualMode = v;
+  ledState = v;
+
+  digitalWrite(LED_PIN, ledState ? HIGH : LOW);
+  enviarAtuadoresParaAPI();
+}
+
+BLYNK_WRITE(V3) {  // FAN
+  int v = param.asInt();
+  fanManualMode = v;
+  fanState = v;
+
+  digitalWrite(RELAY_FAN_PIN, fanState ? RELAY_ON : RELAY_OFF);
+  enviarAtuadoresParaAPI();
+}
+
+BLYNK_WRITE(V4) {  // MIST
+  int v = param.asInt();
+  mistManualMode = v;
+  mistState = v;
+
+  digitalWrite(RELAY_MIST_PIN, mistState ? RELAY_ON : RELAY_OFF);
+  enviarAtuadoresParaAPI();
+}
+
+/********************  PRINT FORMATADO  ********************/
+void printEstado(float t, float h) {
+  Serial.printf(
+    "Temp: %.2f | Hum: %.2f | FAN: %s(%s) | MIST: %s(%s) | LED: %s(%s)\n",
+    t, h,
+    fanManualMode ? "MANUAL" : "AUTO", fanState ? "ON" : "OFF",
+    mistManualMode ? "MANUAL" : "AUTO", mistState ? "ON" : "OFF",
+    ledManualMode ? "MANUAL" : "AUTO", ledState ? "ON" : "OFF"
+  );
+}
+
+/********************  SETUP  ********************/
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(RELAY_FAN_PIN, OUTPUT);
+  pinMode(RELAY_MIST_PIN, OUTPUT);
+
+  digitalWrite(LED_PIN, LOW);
+  digitalWrite(RELAY_FAN_PIN, RELAY_OFF);
+  digitalWrite(RELAY_MIST_PIN, RELAY_OFF);
+
+  WiFi.begin(ssid, pass);
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(300);
+  }
+  Serial.println("\nWiFi OK!");
+
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+}
+
+/********************  LOOP PRINCIPAL  ********************/
+void loop() {
+  Blynk.run();
+
+  float t = dht.readTemperature();
+  float h = dht.readHumidity();
+
+  if (isnan(t) || isnan(h)) return;
+
+  unsigned long now = millis();
+
+  /******** AUTO FAN ********/
+  if (!fanManualMode) {
+    bool newState = t > 26;
+    if (newState != fanState) {
+      fanState = newState;
+      digitalWrite(RELAY_FAN_PIN, fanState ? RELAY_ON : RELAY_OFF);
+      enviarAtuadoresParaAPI();
+    }
+  }
+
+  /******** AUTO MIST ********/
+  if (!mistManualMode) {
+    bool newState = h < 60;
+    if (newState != mistState) {
+      mistState = newState;
+      digitalWrite(RELAY_MIST_PIN, mistState ? RELAY_ON : RELAY_OFF);
+      enviarAtuadoresParaAPI();
+    }
+  }
+
+  /******** AUTO LED (1 min ON / 1 min OFF) ********/
+  if (!ledManualMode) {
+    if (now - lastLedToggle >= 60000) {    // <-- 60s interval real e dedicado
+      lastLedToggle = now;
+      ledState = !ledState;
+
+      digitalWrite(LED_PIN, ledState ? HIGH : LOW);
+      enviarAtuadoresParaAPI();
+    }
+  }
+
+  /******** SENSOR → API + BLYNK quando necessário ********/
+  if (fabs(t - lastTemp) >= 0.4 || fabs(h - lastHum) >= 1.0 || now - lastSensorSend >= 30000) {
+    lastSensorSend = now;
+    lastTemp = t;
+    lastHum = h;
+
+    enviarSensorParaAPI(t, h);
+    enviarSensorParaBlynk(t, h);
+  }
+
+  /******** PRINT A CADA 30s ********/
+  if (now - lastPrint >= 30000) {
+    lastPrint = now;
+    printEstado(t, h);
+  }
+}
