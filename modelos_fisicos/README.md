@@ -37,12 +37,9 @@ Esta pasta contém toda a documentação relacionada com a **montagem física do
 
 ## 🧩 Diagrama de Ligações
 
-O diagrama elétrico do sistema encontra-se representado nos seguintes ficheiros:
+https://cdn.discordapp.com/attachments/775789461388656651/1450156639138353285/image.png?ex=6941831d&is=6940319d&hm=4b23a592f67acf6cea2c81e46b49a433b20f6754c261e4b5136ec35e500b1453&
+https://cdn.discordapp.com/attachments/775789461388656651/1450156581583982734/image.png?ex=6941830f&is=6940318f&hm=7bbe1eb2097ba2fa89543fb3f935f15e60200c7d19465b3baec85ed6af9873c0&
 
-- `diagrama_ligacoes.png`
-- `esquema_circuito.pdf`
-
-Estes diagramas ilustram a ligação entre o ESP32, o sensor DHT22, os relés e os atuadores.
 
 ---
 
@@ -50,10 +47,8 @@ Estes diagramas ilustram a ligação entre o ESP32, o sensor DHT22, os relés e 
 
 Nesta pasta encontram-se fotografias reais do protótipo físico montado, incluindo:
 
-- Visão geral do sistema
-- Ligações na protoboard
-- Sensor DHT22 em funcionamento
-- Módulo de relés ligado aos atuadores
+blob:https://web.whatsapp.com/356e20d4-99eb-421d-868d-49361eb0b0fb
+
 
 ---
 
