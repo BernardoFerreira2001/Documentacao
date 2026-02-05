@@ -393,8 +393,8 @@ A solução final integra:
 ### 2.1 Hardware final
 - ESP32 DevKit v1
 - Sensor DHT22
-- Sensor de humidade do solo (entrada ADC no ESP32)
-- Módulo de relés (múltiplos canais)
+- Sensor de humidade do solo
+- Módulo de relés (4 Entradas)
 - Ventoinha 5V
 - LED
 - Nebulizador (mist)
@@ -405,7 +405,7 @@ A solução final integra:
 ### 2.2 Software final
 - Firmware ESP32 (Arduino/C++) com Wi-Fi + Blynk + HTTP
 - API REST em FastAPI (Python)
-- MySQL (persistência)
+- MySQL 
 - Scripts IA (Python / VS Code):
   - `pandas`
   - `numpy`
