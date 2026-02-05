@@ -436,7 +436,7 @@ Paralelamente:
 
 [ESP32] ↔ [Blynk Cloud/App] (controlo manual e visualização)
 
-Ligacoes
+Ligacoes:
 <img width="1951" height="1067" alt="image" src="https://github.com/user-attachments/assets/020eb4e2-c8ca-4c8f-8b1d-c4e27694482b" />
 
 ---
