@@ -3,7 +3,7 @@
 📅 **Data de entrega:** 11 de novembro de 2025  
 
 ---
-teste
+
 ## Identificação
 
 | Elemento | Número | Curso | UC | Ano/Semestre |
