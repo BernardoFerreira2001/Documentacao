@@ -501,7 +501,7 @@ A IA foi integrada com:
 - ✅ Sistema distribuído ESP32 ↔ API REST ↔ MySQL  
 - ✅ Sensores ambientais e controlo automático de atuadores  
 - ✅ Monitorização e controlo remoto (Blynk)  
-- ✅ Persistência histórica de dados  
+- ✅ Histórica de dados  
 - ✅ Integração de IA (modelo preditivo + avaliação)
 
 ### 6.2 Alterações/ajustes face à proposta inicial
