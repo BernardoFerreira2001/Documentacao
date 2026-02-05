@@ -176,7 +176,6 @@ void setup() {
 
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
 
-  // (Opcional mas recomendado) sincroniza o estado dos switches ao ligar
   Blynk.syncVirtual(V2, V3, V4, V5);
 
   Wire.begin(OLED_SDA, OLED_SCL);
