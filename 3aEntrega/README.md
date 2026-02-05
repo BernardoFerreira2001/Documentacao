@@ -376,6 +376,8 @@ A solução final integra:
 
 ### Monitorização e controlo remoto
 - **Blynk** para controlo manual e visualização de estados
+- Monitor OLED
+
 
 ### Inteligência Artificial (implementada na Milestone 3)
 - Pipeline de dados (**BD → dataset**)
