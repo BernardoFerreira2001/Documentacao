@@ -480,7 +480,6 @@ A IA foi integrada com:
 
 ### 5.2 Distribuição real de tarefas (percentagens)
 
-> Cada linha soma 100%. Ajustar percentagens se necessário para refletir exatamente a realidade do grupo.
 
 | Tarefa | Bernardo | Tiago |
 |-------|----------|-------|
@@ -488,9 +487,9 @@ A IA foi integrada com:
 | Integração Blynk (controles + estados) | 50% | 50% |
 | API FastAPI (endpoints + testes) | 60% | 40% |
 | MySQL (estrutura + validação dados) | 50% | 50% |
-| Integração Pump + Humidade Solo | 50% | 50% |
-| Pipeline IA (dataset, features, treino, scripts) | 50% | 50% |
-| Testes ponta-a-ponta e validação | 50% | 50% |
+| Integração Pump + Humidade Solo | 40% | 60% |
+| Pipeline IA (dataset, features, treino, scripts) | 60% | 40% |
+| Testes ponta-a-ponta e validação | 40% | 60% |
 | Documentação, relatório final, apresentação e artefactos | 50% | 50% |
 
 ---
