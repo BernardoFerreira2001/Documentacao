@@ -516,6 +516,7 @@ Na implementação final, foi desenvolvido um modelo focado em **estimativa de c
 ### 6.3 Não realizadas / parciais
 
 - ⚠️ Dashboard web (HTML + Chart.js) não foi finalizado como sistema principal.
+- Mist nao ficou finalizado, todo o codigo e todas as ligacoes a base de dados estao feitas, mas nao conseguimos ligar o mist (Acreditamos que por falta do mini controlador).
 
 **Motivo:** foi priorizada a estabilidade e integração completa do sistema com **Blynk + BD + IA** dentro do tempo disponível.
 
