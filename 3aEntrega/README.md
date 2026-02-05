@@ -531,7 +531,7 @@ De forma global, o GrowLab manteve-se alinhado com a proposta inicial: uma estuf
 ### Pontos positivos principais
 - arquitetura distribuída concretizada e funcional;
 - integração completa hardware/software;
-- persistência em BD para histórico e análise;
+- BD para histórico e análise;
 - controlo remoto via Blynk (modo manual);
 - IA implementada com pipeline completo (dados → features → treino → avaliação → previsão).
 
