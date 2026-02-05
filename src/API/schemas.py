@@ -3,24 +3,26 @@ from sqlmodel import SQLModel
 from typing import Optional
 from datetime import datetime
 
+#---------- SENSOR ----------
 class SensorCreate(SQLModel):
-    device_id: int
     temperature: float
-    humidity: float
-    timestamp: Optional[datetime] = None
+    humidity_air: float
+    humidity_soil: float
 
 class SensorRead(SQLModel):
     id: int
     device_id: int
     temperature: float
-    humidity: float
+    humidity_air: float
+    humidity_soil: float
     timestamp: datetime
 
+#---------- ACTUATORS ----------
 class ActuatorCreate(SQLModel):
-    device_id: int
     fan_state: bool
     mist_state: bool
     led_state: bool
+    pump_state: bool
     mode: str = "auto"
     source: Optional[str] = None
 
@@ -30,15 +32,7 @@ class ActuatorRead(SQLModel):
     fan_state: bool
     mist_state: bool
     led_state: bool
+    pump_state: bool
     mode: str
     source: Optional[str]
     timestamp: datetime
-
-class SettingCreate(SQLModel):
-    device_id: int
-    min_temp: Optional[float] = None
-    max_temp: Optional[float] = None
-    min_humidity: Optional[float] = None
-    max_humidity: Optional[float] = None
-    light_on_time: Optional[str] = None
-    light_off_time: Optional[str] = None
