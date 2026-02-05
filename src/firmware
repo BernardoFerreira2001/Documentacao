@@ -32,8 +32,7 @@ DHT dht(DHTPIN, DHTTYPE);
 #define RELAY_PUMP_PIN 22
 #define SOIL_PIN 34
 
-/********************  BLYNK VPINS (GAUGES)  ********************/
-// ⚠️ Ajusta se no Blynk os gauges estiverem noutros Datastreams
+/********************  BLYNK VPINS   ********************/
 #define VPIN_TEMP        V0
 #define VPIN_HUM_AIR     V1
 #define VPIN_HUM_SOIL    V6
