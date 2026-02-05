@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import os
 
 # --------------------------------------------------
-# CARREGAR .ENV
+# ENV
 # --------------------------------------------------
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -17,23 +17,24 @@ SessionLocal = sessionmaker(bind=engine)
 app = FastAPI(title="GrowLab API")
 
 # --------------------------------------------------
-# MODELOS (Pydantic)
+# Pydantic Schemas
 # --------------------------------------------------
 
 class SensorData(BaseModel):
     temperature: float
-    humidity: float
+    humidity_air: float
+    humidity_soil: float
 
 class ActuatorData(BaseModel):
     fan_state: int
     mist_state: int
     led_state: int
-    mode: str      # "auto" ou "manual"
-    source: str    # "esp32", "blynk", etc.
-
+    pump_state: int
+    mode: str      # auto | manual
+    source: str    # esp32 | blynk
 
 # --------------------------------------------------
-# ENDPOINT: SENSOR READING
+# SENSOR ENDPOINT
 # --------------------------------------------------
 @app.post("/devices/{device_id}/sensor")
 def add_sensor_reading(device_id: int, data: SensorData):
@@ -41,27 +42,29 @@ def add_sensor_reading(device_id: int, data: SensorData):
         db = SessionLocal()
 
         query = text("""
-            INSERT INTO sensor_readings (device_id, temperature, humidity)
-            VALUES (:device_id, :temperature, :humidity)
+            INSERT INTO sensor_readings
+            (device_id, temperature, humidity_air, humidity_soil)
+            VALUES
+            (:device_id, :temperature, :humidity_air, :humidity_soil)
         """)
 
         db.execute(query, {
             "device_id": device_id,
             "temperature": data.temperature,
-            "humidity": data.humidity
+            "humidity_air": data.humidity_air,
+            "humidity_soil": data.humidity_soil
         })
 
         db.commit()
         db.close()
 
-        return {"status": "OK", "device": device_id}
+        return {"status": "OK"}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 # --------------------------------------------------
-# ENDPOINT: ACTUATORS
+# ACTUATORS ENDPOINT
 # --------------------------------------------------
 @app.post("/devices/{device_id}/actuators")
 def add_actuator_state(device_id: int, data: ActuatorData):
@@ -70,9 +73,9 @@ def add_actuator_state(device_id: int, data: ActuatorData):
 
         query = text("""
             INSERT INTO actuator_states
-            (device_id, fan_state, mist_state, led_state, mode, source)
+            (device_id, fan_state, mist_state, led_state, pump_state, mode, source)
             VALUES
-            (:device_id, :fan_state, :mist_state, :led_state, :mode, :source)
+            (:device_id, :fan_state, :mist_state, :led_state, :pump_state, :mode, :source)
         """)
 
         db.execute(query, {
@@ -80,6 +83,7 @@ def add_actuator_state(device_id: int, data: ActuatorData):
             "fan_state": data.fan_state,
             "mist_state": data.mist_state,
             "led_state": data.led_state,
+            "pump_state": data.pump_state,
             "mode": data.mode,
             "source": data.source
         })
@@ -87,7 +91,7 @@ def add_actuator_state(device_id: int, data: ActuatorData):
         db.commit()
         db.close()
 
-        return {"status": "OK", "device": device_id}
+        return {"status": "OK"}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
